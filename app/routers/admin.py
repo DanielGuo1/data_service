@@ -10,6 +10,11 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 
 @router.get("/log_file")
 async def get_log_file(name: str | None = None):
+    """
+    Returns the output of a specific log file
+    Returns:
+        log content
+    """
     log_dir_path = Path(CONFIG.LOG.DIR)
     if name is None:
         name = str(Path(CONFIG.LOG.PATH).relative_to(log_dir_path))
@@ -31,5 +36,10 @@ async def get_log_file(name: str | None = None):
 
 @router.get("/available_log_files")
 async def get_available_log_files():
+    """
+    Returns a list of all available log files
+    Returns:
+        list of available files
+    """
     log_dir_path = Path(CONFIG.LOG.DIR)
     return [x.name for x in log_dir_path.glob("*") if x.is_file()]

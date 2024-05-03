@@ -9,7 +9,7 @@ from starlette_context import plugins
 from starlette_context.middleware import ContextMiddleware
 
 from app.config import CONFIG, log
-from app.routers import tags_metadata, routers
+from app.routers import routers
 
 middleware = [
     Middleware(ContextMiddleware, plugins=(plugins.RequestIdPlugin(), plugins.CorrelationIdPlugin())),
@@ -24,7 +24,6 @@ middleware = [
 app = FastAPI(
     title=CONFIG.PROJECT_NAME,
     middleware=middleware,
-    openapi_tags=tags_metadata,
     description=CONFIG.DESCRIPTION,
     version=CONFIG.VERSION,
 )

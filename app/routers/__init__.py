@@ -27,21 +27,4 @@ for path_to_module in base_path.glob("**/*.py"):
 
 log.info(f"loaded routers")
 
-
-tags_metadata = [
-    {
-        "name": "latest",
-        "description": "Endpoints that have already been converted to the latest version.",
-    },
-    {
-        "name": "obsolete",
-        "description": "Endpoints that are obsolete",
-    },
-    {
-        "name": "service_name_xy",
-        "description": "Routes used in xy.",
-    },
-    {"name": "todo", "description": "Endpoints that need to be removed or transferred to new framework"},
-]
-
-__all__ = ["routers", "tags_metadata"]
+__all__ = ["routers"]
