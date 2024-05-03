@@ -1,0 +1,28 @@
+[project]
+name = "data_service"
+version = "1.0.1"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+markers = [
+    "smoke_test: marks tests as smoke tests for deployment",
+]
+minversion = "6.0"
+addopts = "-ra -q -m 'not is_manual_test'"
+
+[tool.black]
+line-length = 120
+target-version = ['py310']
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | build
+  | dist
+)/
+'''
+
+[tool.coverage.run]
+omit = [
+    "tests/*"
+]

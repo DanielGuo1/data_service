@@ -1,0 +1,36 @@
+name: data_service
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Core dependencies
+  - python=3.10
+  - fastapi=0.79
+  - uvicorn=0.17
+  - numpy=1.24.*
+  - pandas=1.3
+  - polars=0.18.*
+  - pyarrow=11.0.*
+  - cachetools=5.3.*
+  - jinja2=2.*
+  - turbodbc>=4.5.10,<5.0
+
+  # HTTP and networking
+  - requests-mock=1.8.0
+
+  # Compatibility dependencies
+  - anyio=3.*  # Version 4.0.0 is currently not compatible with fastapi 0.79
+
+  # Pip dependencies
+  - pip>=21.0
+  - pip:
+      - omegaconf==2.1.*
+      - starlette-context==0.3.*
+
+  # Testing tools
+  - hypothesis=6.8
+  - pytest=6.2
+
+  # Versioning tools
+  - bump2version=1.0.1
