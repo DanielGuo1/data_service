@@ -7,6 +7,7 @@ from app.config import CONFIG
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
+
 @router.get("/log_file")
 async def get_log_file(name: str | None = None):
     log_dir_path = Path(CONFIG.LOG.DIR)
@@ -26,6 +27,7 @@ async def get_log_file(name: str | None = None):
         return FileResponse(log_path, headers=headers)
     else:
         raise HTTPException(status_code=404, detail="Log File not found.")
+
 
 @router.get("/available_log_files")
 async def get_available_log_files():

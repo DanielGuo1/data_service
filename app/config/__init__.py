@@ -34,7 +34,7 @@ CONFIG.LOG.NAME = f"{dt.datetime.now():%Y%m%dT%H%M%S}_{CONFIG.LOG.NAME}"
 CONFIG.LOG.PATH = str(path_to_log_dir / CONFIG.LOG.NAME)
 CONFIG.LOG.DIR = str(path_to_log_dir)
 
-logging.basicConfig(filename=CONFIG.LOG.PATH, encoding='utf-8', level=logging.DEBUG)
+logging.basicConfig(filename=CONFIG.LOG.PATH, encoding="utf-8", level=logging.DEBUG)
 log = logging.getLogger(__name__)
 log.info(f"Setting up logger")
 log.debug(f"Log path is {CONFIG.LOG.PATH}")
