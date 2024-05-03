@@ -1,6 +1,7 @@
+import pandas as pd
 import psycopg2
 from contextlib import contextmanager
-from app.config import log
+from app.config import log, CONFIG
 
 
 class SimplePostgresConnector:
@@ -65,27 +66,6 @@ class SimplePostgresConnector:
         finally:
             self.close()
 
-    def parse_query(self, sql) -> str:
-        """Decide which query best to execute by looking at the SQL statement.
-
-        This function focuses on basic SQL statements and selects the appropriate execution method accordingly.
-
-        Args:
-            sql: SQL query
-            force_read_only: Ensure that stored procedures are directed to read-only mode if True.
-
-        Returns:
-            Callable: Method to execute the query.
-
-        """
-        if not isinstance(sql, str):
-            raise ValueError("SQL statements must be a string")
-        raw = [x for x in sql.casefold().strip().split() if x]
-        if not raw:
-            raise ValueError("SQL statement seems to be empty")
-
-        return raw
-
     def execute_query(self, query, params=None):
         """
         Executes an SQL query and returns the results.
@@ -101,7 +81,8 @@ class SimplePostgresConnector:
             with self.cursor() as cursor:
                 cursor.execute(query, params)
                 if cursor.description:
-                    return cursor.fetchall()
+                    columns = [desc[0] for desc in cursor.description]
+                    return pd.DataFrame(cursor.fetchall(), columns=columns)
                 return None
         except psycopg2.Error as e:
             log.error(f"Error executing the query: {e}")
@@ -109,14 +90,11 @@ class SimplePostgresConnector:
 
 
 # Example usage of the class
-connector = SimplePostgresConnector(host="localhost", dbname="data_service", user="platau")
+connector = SimplePostgresConnector(host=CONFIG.DATABASE.HOST, dbname=CONFIG.DATABASE.DBNAME, user=CONFIG.DATABASE.USER)
 sql_query = "SELECT * FROM attributes"
 
 try:
-    parsed_query = connector.parse_query(sql_query)
     results = connector.execute_query(sql_query)
-    for row in results:
-        print(row)
 
 except Exception as e:
     log.error(f"Error executing SQL query: {e}")

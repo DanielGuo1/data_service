@@ -19,3 +19,8 @@ LOG:
   DIR: ./logs
   NAME: data_service.log
   TO_FILE: true
+
+DATABASE:
+  HOST: localhost
+  DBNAME: data_service
+  USER: platau

@@ -668,7 +668,7 @@ $RECYCLE.BIN/
 #Pipfile.lock
 
 
-
+/app/sql/
 /app/config/local.yml
 _dumps
 _logs
